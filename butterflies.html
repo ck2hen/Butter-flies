@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Butterflies</title>
+<style type="text/css">		
+	@keyframes fly0{
+		from{transform:rotateY(0deg) translate(0px,600px);}
+		30%{transform:rotateY(65deg) translate(0px,400px);}
+		50%{transform:rotateY(0deg) translate(220px,230px);}
+		70%{transform:rotateY(60deg) translate(400px,100px);}
+		to{transform:rotateY(0deg) translate(320px,-150px) scale(0.5,0.5);}
+		}
+	@keyframes fly1{
+		from{transform:rotateY(60deg) translate(0px,600px);}
+		20%{transform:rotateY(0deg) translate(50px,450px);}
+		55%{transform:rotateY(70deg) translate(-20px,300px);}
+		80%{transform:rotateY(0deg) translate(-10px,0px);}		
+		to{transform:rotateY(50deg) translate(0px,-150px) scale(0.5,0.5);}		
+		}
+	@keyframes fly2{
+		from{transform:rotateY(60deg) translate(0px,600px);}
+		25%{transform:rotateY(0deg) translate(-50px,480px);}
+		55%{transform:rotateY(60deg) translate(120px,350px);}
+		83%{transform:rotateY(0deg) translate(50px,20px);}		
+		to{transform:rotateY(50deg) translate(0px,-150px) scale(0.5,0.5);}
+		}
+	@keyframes fly3{
+		from{transform:rotateY(60deg) translate(-200px,650px);}
+		25%{transform:rotateY(0deg) translate(-300px,570px);}
+		55%{transform:rotateY(60deg) translate(-200px,250px);}
+		83%{transform:rotateY(0deg) translate(-100px,0px);}		
+		to{transform:rotateY(50deg) translate(-200px,-150px) scale(0.5,0.5);}
+		}
+	@keyframes bgScale{
+		from{transform:scale(1,1);transform-origin:top}
+		to{transform:scale(2,2);transform-origin:top}
+		}
+	body{margin:0;padding:0;height:660px;overflow:hidden}
+	.stage{transform-style:preserve-3d;perspective:800;perspective-origin:50%,50%;overflow:hidden;height:100%}
+	.canvas{transform:translateY(600px);}			
+	#canvas0{animation:fly0 4s ease-in-out 0s infinite;}
+	#canvas1{animation:fly1 6s ease-out 0s infinite;}
+	#canvas2{animation:fly2 7s ease 0s infinite;}
+	#canvas3{animation:fly3 9s linear 0s infinite;}
+	img{animation:bgScale 60s ease-out 0s ;animation-fill-mode:forwards;position:absolute;height:100%;width:100%;}
+</style>
+</head>
+	
+<body>
+	<div class="stage">
+    	<img src="images/bg.jpg" />
+		<canvas id="canvas0" class="canvas">你的浏览器版本不支持，请用其它浏览器打开</canvas>
+        <canvas id="canvas1" class="canvas">你的浏览器版本不支持，请用其它浏览器打开</canvas>
+        <canvas id="canvas2" class="canvas">你的浏览器版本不支持，请用其它浏览器打开</canvas>
+        <canvas id="canvas3" class="canvas">你的浏览器版本不支持，请用其它浏览器打开</canvas>
+    </div>
+    <script type="text/javascript">		    		
+		var canvas=document.getElementsByTagName('canvas');
+		var context=[];
+		for(var i=0;i<canvas.length;i++){
+			context[i]=canvas[i].getContext('2d');
+			}
+
+		var colorBase=['#00FF77','#00FFF7',,'#0089FF','#0009FF','#7700FF','#F700FF','#FF0089','#FF0009','#FF7700','#FFF700','#89FF00','#09FF00','#FFF','#000'];
+		var timer=null;
+		butterfly();		
+		timer=setInterval(butterfly,6000);		//每6秒重新生成四只蝴蝶
+		
+		function butterfly(){		//蝴蝶大小和颜色变化
+			drawButterfly(canvas[0].width/2,canvas[0].height/2,1*Math.random(),colorBase[Math.floor(Math.random()*colorBase.length)],context[0]);
+			drawButterfly(canvas[0].width/2,canvas[0].height/2,0.9*Math.random(),colorBase[Math.floor(Math.random()*colorBase.length)],context[0]);	
+			drawButterfly(canvas[1].width/2,canvas[1].height/2,.5*Math.random(),colorBase[Math.floor(Math.random()*colorBase.length)],context[1]);
+			drawButterfly(canvas[1].width/2,canvas[1].height/2,0.45*Math.random(),colorBase[Math.floor(Math.random()*colorBase.length)],context[1]);
+			drawButterfly(canvas[2].width/2,canvas[2].height/2,.7*Math.random(),colorBase[Math.floor(Math.random()*colorBase.length)],context[2]);
+			drawButterfly(canvas[2].width/2,canvas[2].height/2,0.65*Math.random(),colorBase[Math.floor(Math.random()*colorBase.length)],context[2]);	
+			drawButterfly(canvas[3].width/2,canvas[3].height/2,.8*Math.random(),colorBase[Math.floor(Math.random()*colorBase.length)],context[3]);
+			drawButterfly(canvas[3].width/2,canvas[3].height/2,0.75*Math.random(),colorBase[Math.floor(Math.random()*colorBase.length)],context[3]);					
+			}
+
+		function drawButterfly(x,y,r,color,context){		//绘制蝴蝶
+			//左上触手
+			context.save();
+            context.beginPath();
+			context.moveTo(x,y);
+			context.quadraticCurveTo(x-6*r,y-30*r,x-12*r,y-40*r);					
+            context.stroke();			
+			context.closePath();
+			context.beginPath();
+			context.arc(x-12*r,y-40*r,r,0,2*Math.PI);
+			context.fillStyle=color;
+			context.fill();
+            context.restore();
+			
+			//左上触手
+			context.save();
+            context.beginPath();
+			context.moveTo(x,y);
+			context.quadraticCurveTo(x+6*r,y-30*r,x+12*r,y-40*r);					
+            context.stroke();			
+			context.closePath();
+			context.beginPath();
+			context.arc(x+12*r,y-40*r,r,0,2*Math.PI);
+			context.fillStyle=color;
+			context.fill();
+            context.restore();
+			
+			//左上翅膀
+			context.save();
+            context.beginPath();
+			context.moveTo(x,y);
+			context.quadraticCurveTo(x-10*r,y-36*r,x-50*r,y-50*r);
+			context.quadraticCurveTo(x-54*r,y-50*r,x-56*r,y-44*r);
+			context.quadraticCurveTo(x-58*r,y-28*r,x-50*r,y-4*r);
+			context.quadraticCurveTo(x-48*r,y-2*r,x-44*r,y-r);
+			context.quadraticCurveTo(x-8*r,y+4*r,x,y);
+			context.fillStyle=color;
+			context.shadowColor='#555';
+			context.shadowOffsetX=-2;
+			context.shadowOffsetY=2;
+			context.shadowBlur=3;
+            context.stroke();
+			context.fill();
+			context.closePath();
+            context.restore();
+			
+			//右上翅膀
+			context.save();
+            context.beginPath();
+			context.moveTo(x,y);
+			context.quadraticCurveTo(x+10*r,y-36*r,x+50*r,y-50*r);
+			context.quadraticCurveTo(x+54*r,y-50*r,x+56*r,y-44*r);
+			context.quadraticCurveTo(x+58*r,y-28*r,x+50*r,y-4*r);
+			context.quadraticCurveTo(x+48*r,y-2*r,x+44*r,y-r);
+			context.quadraticCurveTo(x+8*r,y+4*r,x,y);
+			context.fillStyle=color;
+			context.shadowColor='#555';
+			context.shadowOffsetX=2;
+			context.shadowOffsetY=2;
+			context.shadowBlur=3;
+            context.stroke();
+			context.fill();
+			context.closePath();
+            context.restore();
+			
+			//左下翅膀
+			context.save();
+            context.beginPath();
+			context.moveTo(x,y);
+			context.quadraticCurveTo(x-6*r,y+40*r,x-26*r,y+46*r);
+			context.quadraticCurveTo(x-38*r,y+80*r,x-28*r,y+46*r);	//x1控制翼尖方向，y1控制翼尖长度
+			context.quadraticCurveTo(x-54*r,y+16*r,x-26*r,y+10*r);
+			context.quadraticCurveTo(x-24*r,y+10*r,x-16*r,y+7*r);
+			context.quadraticCurveTo(x-4*r,y+r,x,y);
+			context.fillStyle=color;
+			context.shadowColor='#333';
+			context.shadowOffsetX=-2;
+			context.shadowOffsetY=2;
+			context.shadowBlur=3;
+            context.stroke();
+			context.fill();
+			context.closePath();
+            context.restore();			
+			
+			//右下翅膀
+			context.save();
+            context.beginPath();
+			context.moveTo(x,y);
+			context.quadraticCurveTo(x+6*r,y+40*r,x+26*r,y+46*r);
+			context.quadraticCurveTo(x+38*r,y+80*r,x+28*r,y+46*r);	//x1控制翼尖方向，y1控制翼尖长度
+			context.quadraticCurveTo(x+54*r,y+16*r,x+26*r,y+10*r);
+			context.quadraticCurveTo(x+24*r,y+10*r,x+16*r,y+7*r);
+			context.quadraticCurveTo(x+4*r,y+r,x,y);
+			context.fillStyle=color;
+			context.shadowColor='#333';
+			context.shadowOffsetX=2;
+			context.shadowOffsetY=2;
+			context.shadowBlur=3;
+            context.stroke();
+			context.fill();
+			context.closePath();
+            context.restore();
+			}
+    </script>
+</body>
+</html>
